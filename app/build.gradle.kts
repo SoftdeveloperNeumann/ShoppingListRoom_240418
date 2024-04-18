@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures{
+        viewBinding = true
+    }    
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -50,7 +54,7 @@ dependencies {
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-   // implementation(libs.androidx.room.compiler)
+    annotationProcessor(libs.androidx.room.compiler)
 
 
 
