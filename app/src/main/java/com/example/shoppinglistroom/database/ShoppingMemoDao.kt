@@ -11,10 +11,10 @@ import androidx.room.Query
 interface ShoppingMemoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrUpdate(memo: ShoppingMemo)
+    suspend fun insertOrUpdate(memo: ShoppingMemo)
 
     @Delete
-    fun delete(memo: ShoppingMemo)
+    suspend fun delete(memo: ShoppingMemo)
 
     @Query(value = "SELECT * FROM shopping_list")
     fun getAllShoppingMemos(): LiveData<List<ShoppingMemo>>
