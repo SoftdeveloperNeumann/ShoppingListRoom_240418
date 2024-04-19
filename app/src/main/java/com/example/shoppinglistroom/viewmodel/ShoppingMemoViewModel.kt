@@ -13,9 +13,10 @@ object ShoppingMemoViewModel: ViewModel() {
     private var repository:ShoppingMemoRepository? = null
     private var allShoppingMemos: LiveData<List<ShoppingMemo>>? = null
 
-   operator fun invoke(app:Application){
+   operator fun invoke(app:Application):ShoppingMemoViewModel{
        repository = ShoppingMemoRepository(app)
        allShoppingMemos = repository?.getAllShoppingMemos()
+       return this
    }
 
     fun getAllShoppingMemos():LiveData<List<ShoppingMemo>>?{
