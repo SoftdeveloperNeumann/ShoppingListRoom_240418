@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("kotlin-kapt")
+    alias (libs.plugins.myroomKsp)
+    alias(libs.plugins.room)
+    id("kotlin-kapt")
 }
 
 android {
@@ -31,15 +33,20 @@ android {
             )
         }
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
-}
 
+}
 
 
 dependencies {
@@ -57,9 +64,9 @@ dependencies {
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+//    implementation(libs.androidx.room.compiler)
     annotationProcessor(libs.androidx.room.compiler)
-
+    kapt(libs.androidx.room.compiler)
 
 
     testImplementation(libs.junit)
