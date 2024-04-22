@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var shoppinMemoViewModel: ShoppingMemoViewModel
-    private  val adapter = ShoppingMemoListAdapter()
+    private val adapter = ShoppingMemoListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,19 +23,27 @@ class MainActivity : AppCompatActivity() {
         binding.rvShoppingMemos.adapter = adapter
 
         shoppinMemoViewModel = ShoppingMemoViewModel(application)
-        shoppinMemoViewModel.getAllShoppingMemos()?.observe(this){
+        shoppinMemoViewModel.getAllShoppingMemos()?.observe(this) {
             adapter.setShoppingMemos(it)
         }
 
+        adapter.setOnItemClickListener(object : ShoppingMemoListAdapter.OnItemClickListener {
+            override fun onItemClick(memo: ShoppingMemo) {
+                memo.isSelected = !memo.isSelected
+                shoppinMemoViewModel.insertOrUpdate(memo)
+            }
+
+        })
+
         binding.btnAddProduct.setOnClickListener {
-            if(binding.etQuantity.text.isBlank()){
-                binding.etQuantity.error="Feld darf nicht leer sein"
+            if (binding.etQuantity.text.isBlank()) {
+                binding.etQuantity.error = "Feld darf nicht leer sein"
                 binding.etQuantity.requestFocus()
                 return@setOnClickListener
             }
 
-            if(binding.etProduct.text.isBlank()){
-                binding.etProduct.error="Feld darf nicht leer sein"
+            if (binding.etProduct.text.isBlank()) {
+                binding.etProduct.error = "Feld darf nicht leer sein"
                 binding.etProduct.requestFocus()
                 return@setOnClickListener
             }
@@ -50,6 +58,10 @@ class MainActivity : AppCompatActivity() {
             binding.etProduct.text.clear()
             binding.etQuantity.text.clear()
             binding.etQuantity.requestFocus()
+        }
+
+        binding.etProduct.setOnEditorActionListener { _, _, _ ->
+            binding.btnAddProduct.performClick()
         }
 
     }
