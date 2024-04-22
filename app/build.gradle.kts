@@ -69,6 +69,9 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
 
+    // Swipe-Decorator
+    implementation(libs.swipe.decorator)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

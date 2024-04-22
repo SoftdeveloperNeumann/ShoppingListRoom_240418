@@ -1,5 +1,7 @@
 package com.example.shoppinglistroom
 
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -10,6 +12,7 @@ import com.example.shoppinglistroom.database.ShoppingMemo
 import com.example.shoppinglistroom.databinding.ActivityMainBinding
 import com.example.shoppinglistroom.viewmodel.ShoppingMemoViewModel
 import com.google.android.material.snackbar.Snackbar
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class MainActivity : AppCompatActivity() {
 
@@ -99,6 +102,76 @@ class MainActivity : AppCompatActivity() {
 
                    }
                 }
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addBackgroundColor(Color.LTGRAY)
+                    .addSwipeLeftActionIcon(R.drawable.ic_edit_black_24dp)
+                    .addSwipeRightActionIcon(R.drawable.ic_delete_black_24dp)
+                    .create()
+                    .decorate()
+
+//                val itemView = viewHolder.itemView
+//                val background = ColorDrawable(Color.LTGRAY)
+//                val iconDelete = AppCompatResources.getDrawable(this@MainActivity,R.drawable.ic_delete_black_24dp)
+//                val iconEdit = AppCompatResources.getDrawable(this@MainActivity,R.drawable.ic_edit_black_24dp)
+//                val backgroundCornerOffset=20
+//                val iconMargin = (itemView.height - iconEdit!!.intrinsicHeight)/2
+//                val iconTop = itemView.top + (itemView.height - iconEdit.intrinsicHeight)/2
+//                val iconBottom = iconTop + iconDelete!!.intrinsicHeight
+//
+//                if(dX > 0){ // Swipe to right
+//                    val iconLeft = itemView.left + iconMargin+iconDelete.intrinsicHeight
+//                    val iconRight = itemView.left +iconMargin
+//                    iconDelete.setBounds(iconLeft,iconTop,iconRight,iconBottom)
+//                    background.setBounds(itemView.left,itemView.top,
+//                        itemView.left + dX.toInt()+backgroundCornerOffset,itemView.bottom)
+//
+//                }else if (dX < 0) { // Swipe to left
+//                    val iconLeft =
+//                        itemView.right - iconMargin - iconEdit.intrinsicWidth
+//                    val iconRight = itemView.right - iconMargin
+//                    iconEdit.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+//                    background.setBounds(
+//                        itemView.right + dX.toInt() - backgroundCornerOffset,
+//                        itemView.top, itemView.right, itemView.bottom
+//                    )
+//
+//                }else{ // unSwiped
+//                    background.setBounds(0,0,0,0)
+//                }
+//                background.draw(c)
+//                iconDelete.draw(c)
+//                iconEdit.draw(c)
+
+
             }
         })
 
